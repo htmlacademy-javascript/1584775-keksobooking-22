@@ -76,9 +76,3 @@ const showAdvert = (adverts) => {
 }
 
 showAdvert(similarAdverts[0]);
-
-
-
-
-
-
