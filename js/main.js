@@ -1,1 +1,1 @@
-import 'temporary-data.js';
+import './card-advert.js';

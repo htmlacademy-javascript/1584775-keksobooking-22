@@ -46,5 +46,4 @@ const createAdvert = () => ({
 
 const similarAdverts = new Array(QUANTITY_ADVERTS).fill(null).map(createAdvert);
 
-// eslint-disable-next-line no-console
-console.log(similarAdverts);
+export {similarAdverts};
