@@ -1,25 +1,21 @@
-import {similarAdverts} from './temporary-data.js';
-
-const mapWindow = document.querySelector('#map-canvas');
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const showAdvert = (adverts) => {
-
-  const defineType = (type) => {
-    switch (type) {
-      case 'flat':
-        return 'Квартира';
-      case 'bungalow':
-        return 'Бунгало';
-      case 'house':
-        return 'Дом';
-      case 'palace':
-        return 'Дворец';
-
-    }
+const defineType = (type) => {
+  switch (type) {
+    case 'flat':
+      return 'Квартира';
+    case 'bungalow':
+      return 'Бунгало';
+    case 'house':
+      return 'Дом';
+    case 'palace':
+      return 'Дворец';
   }
+}
+
+const showAdvert = (adverts) => {
 
   const removeFeature = (features) => {
     const featureList = advertElement.querySelector('.popup__features');
@@ -60,6 +56,7 @@ const showAdvert = (adverts) => {
   }
 
   const advertElement = cardTemplate.cloneNode(true);
+  const fragment = document.createDocumentFragment();
 
   advertElement.querySelector('.popup__title').textContent = adverts.offer.title;
   advertElement.querySelector('.popup__text--address').textContent = adverts.offer.address;
@@ -76,7 +73,7 @@ const showAdvert = (adverts) => {
   }
   advertElement.querySelector('.popup__avatar').src = adverts.author.avatar;
 
-  mapWindow.appendChild(advertElement);
+  return(fragment.appendChild(advertElement));
 }
 
-showAdvert(similarAdverts[0]);
+export {showAdvert};
