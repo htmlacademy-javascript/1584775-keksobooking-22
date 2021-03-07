@@ -29,4 +29,33 @@ const getRandomArray = (elements) => {
   return similarArray.filter((item, index) => similarArray.indexOf(item) === index)
 }
 
-export {getRandomFloat, getRandomInteger, getRandomArrayElement, getRandomArray};
+/* Обработчики событий */
+
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const closeOnEsc = (popup) => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      popup.remove();
+    }
+  })
+}
+
+const closeOnClick = (popup, button) => {
+  button.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    popup.remove();
+  })
+}
+
+export {
+  getRandomFloat,
+  getRandomInteger,
+  getRandomArrayElement,
+  getRandomArray,
+  closeOnEsc,
+  closeOnClick
+};
