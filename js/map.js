@@ -1,8 +1,9 @@
 /* global L:readonly */
 
-import {similarAdverts} from './temporary-data.js';
+import {getData} from './server.js';
 import {showAdvert} from './card-advert.js';
 import {activateForm} from './form.js';
+import {showErrorMessageGet} from './popup-message.js';
 
 /* Создание карты */
 
@@ -56,6 +57,18 @@ mainPinMarker.on('drag', (evt) => {
   getCoordinates(evt.target.getLatLng());
 });
 
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: centerTokyo.lat,
+    lng: centerTokyo.lng,
+  });
+  map.setView({
+    lat: centerTokyo.lat,
+    lng: centerTokyo.lng,
+  }, 12);
+  address.value = `${centerTokyo.lat}, ${centerTokyo.lng}`
+}
+
 /* Обычные метки */
 
 const usualPinIcon = L.icon({
@@ -64,24 +77,31 @@ const usualPinIcon = L.icon({
   iconAnchor: [20, 40],
 })
 
-similarAdverts.forEach((advert) => {
+const renderSimilarAdverts = (adverts) => {
 
-  const usualPinMarker = L.marker(
-    {
-      lat: advert.location.x,
-      lng: advert.location.y,
-    },
-    {
-      icon: usualPinIcon,
-    },
-  )
+  adverts.forEach((advert) => {
 
-  usualPinMarker
-    .addTo(map)
-    .bindPopup(
-      showAdvert(advert),
+    const usualPinMarker = L.marker(
       {
-        keepInView: true,
+        lat: advert.location.lat,
+        lng: advert.location.lng,
       },
-    );
-})
+      {
+        icon: usualPinIcon,
+      },
+    )
+
+    usualPinMarker
+      .addTo(map)
+      .bindPopup(
+        showAdvert(advert),
+        {
+          keepInView: true,
+        },
+      );
+  })
+}
+
+getData(renderSimilarAdverts, showErrorMessageGet)
+
+export {resetMap};
